@@ -63,6 +63,8 @@ def zobraz_trenerov():
     treneri = cursor.fetchall()
 
     conn.close()
+    
+    return render_template("treneri.html", treneri=treneri)
 
 @app.route('/miesta')
 def zobraz_miesta():
@@ -73,12 +75,7 @@ def zobraz_miesta():
     miesta=cursor.fetchall()
     conn.close()
 
-    vystup="<h2>Zoznam miest:</h2>"
-    for miesto in miesta:
-        vystup+= f"<p>{miesto}</p>"
-
-    vystup+='<a href="/"><button>Späť</button></a>'
-    return vystup
+    return render_template("miesta.html", miesta=miesta)
 
 @app.route('/registracia', methods=['GET'])
 def registracia_form():

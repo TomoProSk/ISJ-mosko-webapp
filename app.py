@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import sqlite3
 import hashlib
 
@@ -37,15 +37,6 @@ def zobraz_ucastnikov():
 
     conn.close()
 
-    # Jednoduchý textový výpis kurzov
-    vystup = "<h2>Zoznam ucastnikov:</h2>"
-    for kurz in kurzy:
-        vystup += f"<p>{kurz}</p>"
-
-    # Odkaz na návrat
-    vystup += '<a href="/">Späť</a>'
-    return vystup
-
 
 @app.route('/kurzy')  # API endpoint
 def zobraz_kurzy():
@@ -54,18 +45,9 @@ def zobraz_kurzy():
 
     cursor.execute("SELECT * FROM Kurzy")
     kurzy = cursor.fetchall()
-
     conn.close()
 
-    # Jednoduchý textový výpis kurzov
-    vystup = "<h2>Zoznam kurzov:</h2>"
-    for kurz in kurzy:
-        vystup += f"<p>{kurz}</p>"
-
-    # Odkaz na návrat
-    vystup += '<a href="/">Späť</a>'
-    return vystup
-
+    return render_template("kurzy.html", kurzy=kurzy)
 
 
 

@@ -64,15 +64,6 @@ def zobraz_trenerov():
 
     conn.close()
 
-    # Jednoduchý textový výpis trénerov a ich kurzov
-    vystup = "<h2>Zoznam trénerov a kurzov:</h2>"
-    for trener in treneri:
-        vystup += f"<p>{trener}</p>"
-
-    # Odkaz na návrat
-    vystup += '<a href="/"><button>Späť</button></a>'
-    return vystup
-
 @app.route('/miesta')
 def zobraz_miesta():
     conn=pripoj_db()

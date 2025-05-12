@@ -1,0 +1,24 @@
+h2{
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    text-align: center;
+    margin-top: 40px;
+    text-transform: uppercase;
+    border: solid white;
+    text-shadow: -20px -20px 2px white;
+}
+
+p{
+    color: white;
+    text-align: center;
+}
+
+button{
+    display: block;
+    margin: auto;
+}
+
+html{
+    background-color: black;
+}

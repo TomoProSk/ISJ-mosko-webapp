@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Kurzy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 
 <body>
@@ -11,6 +12,6 @@
         <p>{{ kurz }}</p>
     {% endfor %}
 
-    <a href="/">Späť</a>
+    <a href="/"><button>Späť</button></a>
 </body>
 </html>

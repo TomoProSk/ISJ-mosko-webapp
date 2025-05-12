@@ -33,9 +33,10 @@ def zobraz_ucastnikov():
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM Ucastnici")
-    kurzy = cursor.fetchall()
-
+    ucastnici = cursor.fetchall()
     conn.close()
+
+    return render_template("ucastnici.html", ucastnici=ucastnici)
 
 
 @app.route('/kurzy')  # API endpoint

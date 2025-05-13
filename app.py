@@ -15,17 +15,7 @@ def pripoj_db():
 @app.route('/')  # API endpoint
 def index():
     # Úvodná stránka s dvoma tlačidami ako ODKAZMI na svoje stránky - volanie API nedpointu
-    return '''
-        <h1>Výber z databázy</h1>
-        <a href="/kurzy"><button>Zobraz všetky kurzy</button></a>
-        <a href="/treneri"><button>Zobraz všetkých trénerov</button></a>
-        <a href="/ucastnici"><button>Zobraz všetkých účastníkov</button></a>
-        <a href="/miesta"><button>Zobraz všetky miesta</button></a>
-        <a href="/registracia"><button>Registruj trénera</button></a>
-        <a href="/novykurz"><button>Vložiť kurz</button></a>
-        <hr>
-        
-    '''
+    return render_template("mainweb.html")
 
 @app.route('/ucastnici')
 def zobraz_ucastnikov():

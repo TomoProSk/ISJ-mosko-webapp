@@ -19,6 +19,12 @@ button{
     margin: auto;
 }
 
+table,th,td,tr{
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+}
+
 html{
     background-color: black;
 }

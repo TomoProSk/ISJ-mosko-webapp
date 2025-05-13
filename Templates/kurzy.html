@@ -11,6 +11,13 @@
     {% for kurz in kurzy: %}
         <p>{{ kurz }}</p>
     {% endfor %}
+    <table style="width: 100%">
+        {% for kurz in kurzy: %}
+            <tr>
+                <td>{{ kurz }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 
     <a href="/"><button>Späť</button></a>
 </body>

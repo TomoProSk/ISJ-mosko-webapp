@@ -1,9 +1,18 @@
 from flask import Flask, request, render_template
 import sqlite3
 import hashlib
+from flask_sqlalchemy import SQLAlchemy
+import os
 
-app = Flask(__name__)
+app = Flask(__name__,instance_relative_config=True)
 
+#konfigurácia sql_alchemy-databáza "kurzy.db" je v priečinku instance
+db_path=os.path.join(app.instance_path,"kurzy.db")
+
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}".replace("\\","/")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
+db= SQLAlchemy(app)
+#-----------------------------
 
 
 # Pripojenie k databáze
@@ -11,39 +20,82 @@ def pripoj_db():
     conn = sqlite3.connect("kurzy.db")
     return conn
 
+class Kurz(db.Model):
+    __tablename__="Kurzy"
+    ID_kurzu            =db.Column(db.Integer, primary_key=True)
+    Nazov_kurzu         =db.Column(db.String)
+    Typ_sportu          =db.Column(db.String)
+    Max_pocet_ucastnikov=db.Column(db.Integer)
+    Id_trenera          =db.Column(db.Integer)
+
+    def __repr__(self):
+        return f"<Kurz {self.Nazov_kurzu}>"
+    
+class Treneri(db.Model):
+    __tablename__="Treneri"
+    Id_trenera          =db.Column(db.Integer, primary_key=True)
+    Meno                =db.Column(db.String)
+    Priezvisko          =db.Column(db.String)
+    Specializacia       =db.Column(db.String)
+    Telefon             =db.Column(db.Text)
+    Heslo               =db.Column(db.String)
+
+class Miesta(db.Model):
+    __tablename__="Miesta"
+    Id_miesta           =db.Column(db.Integer, primary_key=True)
+    Nazov_miesta        =db.Column(db.String)
+    Adresa              =db.Column(db.String)
+    Kapacita            =db.Column(db.Integer)
+
+class Ucastnici(db.Model):
+    __tablename__="Ucastnici"
+    Id_ucastnika         =db.Column(db.Integer, primary_key=True)
+    Meno                 =db.Column(db.String)
+    Priezvisko           =db.Column(db.String)
+    Datum_narodenia      =db.Column(db.Integer)
+    Telefon              =db.Column(db.String)
 
 @app.route('/')  # API endpoint
 def index():
-    # Úvodná stránka s dvoma tlačidami ako ODKAZMI na svoje stránky - volanie API nedpointu
+    # Úvodná stránka s dvoma tlačidami ako ODKAZMI na svoje stránky - volanie API endpointu
     return render_template("mainweb.html")
 
 @app.route('/ucastnici')
 def zobraz_ucastnikov():
+    '''
     conn = pripoj_db()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM Ucastnici")
     ucastnici = cursor.fetchall()
     conn.close()
+    '''
 
+    ucastnici=Ucastnici.query.all()
     return render_template("ucastnici.html", ucastnici=ucastnici)
 
 
 @app.route('/kurzy')  # API endpoint
 def zobraz_kurzy():
+    ''''
+    Stary spôsob cez sqlite3:
+
     conn = pripoj_db()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM Kurzy")
     kurzy = cursor.fetchall()
     conn.close()
+    '''
 
+    kurzy=Kurz.query.all()
     return render_template("kurzy.html", kurzy=kurzy)
 
 
 
 @app.route('/treneri')  # API endpoint
 def zobraz_trenerov():
+    '''
     conn = pripoj_db()
     cursor = conn.cursor()
 
@@ -54,45 +106,27 @@ def zobraz_trenerov():
     treneri = cursor.fetchall()
 
     conn.close()
+    '''
     
+    treneri=Treneri.query.all()
     return render_template("treneri.html", treneri=treneri)
 
 @app.route('/miesta')
 def zobraz_miesta():
+    '''
     conn=pripoj_db()
     cursor=conn.cursor()
 
     cursor.execute("SELECT * from Miesta")
     miesta=cursor.fetchall()
     conn.close()
-
+    '''
+    miesta=Miesta.query.all()
     return render_template("miesta.html", miesta=miesta)
 
 @app.route('/registracia', methods=['GET'])
 def registracia_form():
-    return '''
-    <h2>Registracia trénera</h2>
-    <form action="/registracia" method="post">
-            <label>Meno:</label><br>
-            <input type="text" name="meno" required><br><br>
-
-            <label>Priezvisko:</label><br>
-            <input type="text" name="priezvisko" required><br><br>
-
-            <label>Špecializácia:</label><br>
-            <input type="text" name="specializacia" required><br><br>
-
-            <label>Telefón:</label><br>
-            <input type="text" name="telefon" required><br><br>
-
-            <label>Heslo:</label><br>
-            <input type="password" name="heslo" required><br><br>
-
-            <button type="submit">Registrovať</button>
-        </form>
-        <hr>
-        <a href="/">Späť</a>
-    '''
+    return render_template("registracia.html")
 
 @app.route('/registracia', methods=['POST'])
 def registracia_trenera():

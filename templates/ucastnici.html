@@ -8,9 +8,22 @@
 
 <body>
     <h2>Zoznam ucastnikov:</h2>
+    <table>
+        <tr>
+            <td><hr3>MENO</hr3></td>
+            <td><hr3>DÁTUM NARODENIA</hr3></td>
+            <td><hr3>TELEFÓN</hr3></td>
+            <td><h3>ID</h3></td>
+        </tr>
     {% for ucastnik in ucastnici: %}
-        <p>{{ ucastnik }}</p>
+        <tr>
+            <td>{{ucastnik.Meno}} {{ucastnik.Priezvisko}}</td>
+            <td>{{ucastnik.Datum_narodenia}}</td>
+            <td>{{Telefon}}</td>
+            <td>{{ucastnik.Id_ucastnika}}</td>
+        </tr>
     {% endfor %}
+    </table>
 
     <a href="/"><button>Späť</button></a>
 </body>

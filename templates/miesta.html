@@ -7,9 +7,22 @@
 </head>
 <body>
     <h2>Zoznam miest:</h2>
+    <table>
+         <tr>
+                <td><h3>NÁZOV</h3></td>
+                <td><h3>ADRESA</h3></td>
+                <td><h3>KAPACITA</h3></td>
+                <td><h3>ID</h3></td>
+            </tr>
     {% for miesto in miesta: %}
-        <p>{{miesto}}</p>
+            <tr>
+                <td>{{ miesto.Nazov_miesta }}</td>
+                <td> {{miesto.Adresa}}</td>
+                <td>{{miesto.Kapacita}}</td>
+                <td>{{miesto.Id_miesta}}</td>
+            </tr>
     {% endfor %}
+    </table>
 
     <a href="/"><button>Späť</button></a>
 </body>

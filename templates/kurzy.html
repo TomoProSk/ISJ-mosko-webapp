@@ -8,13 +8,9 @@
 
 <body>
     <h2>Zoznam kurzov:</h2>
-    <table>
         {% for kurz in kurzy: %}
-            <tr>
-                <td>{{ kurz }}</td>
-            </tr>
+            <p>{{kurz.Nazov_kurzu }} (ID: {{kurz.ID_kurzu }})</p>
         {% endfor %}
-    </table>
 
     <a href="/"><button>Späť</button></a>
 </body>

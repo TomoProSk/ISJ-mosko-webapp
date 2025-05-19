@@ -7,9 +7,22 @@
 </head>
 <body>
     <h2>Zoznam trénerov:</h2>
+    <table>
+        <tr>
+            <td><h3>MENO</h3></td>
+            <td><h3>ŠPECIALIZÁCIA</h3></td>
+            <td><h3>TELEFÓN</h3></td>
+            <td><h3>ID</h3></td>
+        </tr>
     {% for trener in treneri: %}
-        <p>{{trener}}</p>
+        <tr>
+            <td>{{trener.Meno}} {{trener.Priezvisko}}</td>
+            <td>{{trener.Specializacia}}</td>
+            <td>{{trener.Telefon}}</td>
+            <td>{{trener.Id_trenera}}</td>
+        </tr>
     {% endfor %}
+</table>
 
     <a href="/"><button>Späť</button></a>
 </body>

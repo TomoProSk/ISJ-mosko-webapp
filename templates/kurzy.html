@@ -8,9 +8,22 @@
 
 <body>
     <h2>Zoznam kurzov:</h2>
+    <table>
+        <tr>
+            <td><h3>Názov</h3></td>
+            <td><h3>Typ sportu</h3></td>
+            <td><h3>Max. pocet ucastnikov</h3></td>
+            <td><h3>ID</h3></td>
+        </tr>
         {% for kurz in kurzy: %}
-            <p>{{kurz.Nazov_kurzu }} (ID: {{kurz.ID_kurzu }})</p>
+            <tr>
+                <td>{{ kurz.Nazov_kurzu }}</td>
+                <td>{{ kurz.Typ_sportu }}</td>
+                <td>{{ kurz.Max_pocet_ucastnikov }}</td>
+                <td>{{ kurz.ID_kurzu }}</td>
+            </tr>
         {% endfor %}
+</table>
 
     <a href="/"><button>Späť</button></a>
 </body>

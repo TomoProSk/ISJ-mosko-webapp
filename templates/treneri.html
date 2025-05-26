@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
-    <h2>Zoznam trénerov:</h2>
+    <h2>{{ t.trainers_list }}</h2>
     <table>
         <tr>
             <td><h3>MENO</h3></td>
@@ -24,6 +24,6 @@
     {% endfor %}
 </table>
 
-    <a href="/"><button>Späť</button></a>
+    <a href="/"><button>{{ t.back }}</button></a>
 </body>
 </html>

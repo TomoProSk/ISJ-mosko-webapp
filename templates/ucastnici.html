@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h2>Zoznam ucastnikov:</h2>
+    <h2>{{ t.participants }}</h2>
     <table>
         <tr>
             <td><hr3>MENO</hr3></td>
@@ -25,6 +25,6 @@
     {% endfor %}
     </table>
 
-    <a href="/"><button>Späť</button></a>
+    <a href="/"><button>{{ t.back }}</button></a>
 </body>
 </html>

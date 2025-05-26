@@ -1,10 +1,12 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g, session
 import sqlite3
 import hashlib
 from flask_sqlalchemy import SQLAlchemy
+from i18n import TRANSLATIONS, SUPPORTED
 import os
 
 app = Flask(__name__,instance_relative_config=True)
+app.secret_key="tajny_kluc"
 
 #konfigurácia sql_alchemy-databáza "kurzy.db" je v priečinku instance
 db_path=os.path.join(app.instance_path,"kurzy.db")
@@ -54,6 +56,25 @@ class Ucastnici(db.Model):
     Priezvisko           =db.Column(db.String)
     Datum_narodenia      =db.Column(db.Integer)
     Telefon              =db.Column(db.String)
+
+@app.before_request
+def set_lang():
+    # 1. ?lang=en v URL má prednosť
+    lang= request.args.get("lang")
+    # 2. potom session
+    if lang is None:
+        # 2. potom session
+        lang = session.get("lang", "sk")  # 3. fallback na "sk"
+
+    if lang not in SUPPORTED:
+        lang = "sk"
+        # 3. fallback=sk
+    session["lang"]=lang
+    g.t=TRANSLATIONS[lang]
+
+@app.context_processor
+def inject_translations():
+    return dict(t=g.t)
 
 @app.route('/')  # API endpoint
 def index():

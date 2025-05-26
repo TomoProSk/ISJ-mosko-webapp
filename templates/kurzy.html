@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <title>Kurzy</title>
@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h2>Zoznam kurzov:</h2>
+    <h2>{{ t.courses_list }}</h2>
     <table>
         <tr>
             <td><h3>Názov</h3></td>
@@ -25,6 +25,6 @@
         {% endfor %}
 </table>
 
-    <a href="/"><button>Späť</button></a>
+    <a href="/"><button>{{ t.back }}</button></a>
 </body>
 </html>

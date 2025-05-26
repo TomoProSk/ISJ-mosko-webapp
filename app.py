@@ -60,14 +60,14 @@ class Ucastnici(db.Model):
 @app.before_request
 def set_lang():
     # 1. ?lang=en v URL má prednosť
-    lang= request.args.get("lang")
+    lang= request.args.get("lang","sk")
     # 2. potom session
     if lang is None:
         # 2. potom session
         lang = session.get("lang", "sk")  # 3. fallback na "sk"
 
     if lang not in SUPPORTED:
-        lang = "sk"
+        lang = "slotovcina"
         # 3. fallback=sk
     session["lang"]=lang
     g.t=TRANSLATIONS[lang]

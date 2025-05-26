@@ -62,14 +62,15 @@ def set_lang():
     # 1. ?lang=en v URL má prednosť
     lang = request.args.get("lang")
 
-    if lang and lang in SUPPORTED:
-        session["lang"] = lang  # nastavíme nový jazyk do session
-    elif "lang" in session and session["lang"] in SUPPORTED:
-        lang = session["lang"]  # zoberieme z predchádzajúcej session
-    else:
-        lang = "sk"  # fallback jazyk
+    if lang is None:
+        # 2. potom session
+        lang = session.get("lang", "sk")  # 3. fallback na "sk"
 
-    g.t = TRANSLATIONS[lang]  # preklady pre aktuálny jazyk
+    if lang not in SUPPORTED:
+        lang = "sk"
+
+    session["lang"] = lang
+    g.t = TRANSLATIONS[lang]
 
 @app.context_processor
 def inject_translations():

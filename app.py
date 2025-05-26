@@ -67,7 +67,7 @@ def set_lang():
         lang = session.get("lang", "sk")  # 3. fallback na "sk"
 
     if lang not in SUPPORTED:
-        lang = "sk"
+        lang = "slotovcina"
 
     session["lang"] = lang
     g.t = TRANSLATIONS[lang]

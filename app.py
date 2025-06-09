@@ -17,10 +17,7 @@ db= SQLAlchemy(app)
 #-----------------------------
 
 
-# Pripojenie k databáze
-def pripoj_db():
-    conn = sqlite3.connect("kurzy.db")
-    return conn
+# Removed pripoj_db function as SQLAlchemy ORM will be used for database operations.
 
 class Kurz(db.Model):
     __tablename__="Kurzy"
@@ -161,12 +158,9 @@ def registracia_trenera():
     heslo_hash = hashlib.sha256(heslo.encode()).hexdigest()
 
     # Zápis do databázy
-    conn = pripoj_db()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO Treneri (Meno, Priezvisko, Specializacia, Telefon, Heslo) VALUES (?, ?, ?, ?, ?)", 
-                   (meno, priezvisko, specializacia, telefon, heslo_hash))
-    conn.commit()
-    conn.close()
+    novy_trener = Treneri(Meno=meno, Priezvisko=priezvisko, Specializacia=specializacia, Telefon=telefon, Heslo=heslo_hash)
+    db.session.add(novy_trener)
+    db.session.commit()
 
     # Hlásenie o úspešnej registrácii
     return '''
@@ -219,12 +213,9 @@ def pridaj_kurz():
     sifracia_typ=sifracia(typ)
 
     #zápis do databázy
-    conn = pripoj_db()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO Kurzy (Nazov_kurzu, Typ_sportu, Max_pocet_ucastnikov,ID_trenera) VALUES (?, ?, ?, ?)", 
-                   (sifracia_nazov, sifracia_typ, max, id))
-    conn.commit()
-    conn.close()
+    novy_kurz = Kurz(Nazov_kurzu=sifracia_nazov, Typ_sportu=sifracia_typ, Max_pocet_ucastnikov=max, Id_trenera=id)
+    db.session.add(novy_kurz)
+    db.session.commit()
 
     # Hlásenie o úspešnej registrácii
     return '''
